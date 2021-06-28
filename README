@@ -1,0 +1,39 @@
+This is a simple Python interface for the fast-multipole gravity solver "falcON"
+(W.Dehnen, ApJL, 536, 9, 2000), which is provided as a standalone program within
+the NEMO stellar-dynamical toolbox:
+https://teuben.github.io/nemo/
+
+This package provides a single function, gravity(), which constructs the tree
+and computes potential and accelerations for all particles or a subset of them.
+As an example of usage, the program run.py implements a basic N-body simulation
+code: reading the input snapshot (in NEMO format), performing an integration
+loop with the leapfrog method, and writing the output snapshot(s).
+To work with the NEMO I/O format from Python, it relies on the UNSIO library:
+https://projects.lam.fr/projects/unsio/wiki  or
+https://pypi.org/project/python-unsio/
+If UNSIO is not available, it uses a slower fallback for text-to-NEMO conversion.
+This example program is (nearly) equivalent to running the native gyrfalcON code,
+except that it will save each output snapshot to a separate file.
+But the very reason for this package's existence is the possibility of using
+the gravity solver in other contexts, or augment it with extra features, such as
+additional sources of gravity (e.g. an external potential) or custom on-the-fly
+analysis tools performed during the simulation itself.
+
+Note: the falcON code, as a general-purpose gravity solver, computes the forces
+symmetrically and only at the particle locations. For instance, if you want
+to determine the acceleration at an arbitrary point in space, you need to put
+a particle there, and set its mass to a tiny but nonzero value; zero masses
+are not allowed.
+
+Installation.
+Run setup.py install, as usual.
+NEMO (including $NEMO/usr/dehnen/falcON) must be installed in the system
+as a pre-requisite, and its location specified in the environment variable $NEMO.
+UNSIO is recommended for the example program, but is not needed for the Python
+extension module itself.
+The package supports both Python 2.x and 3.x.
+
+To test the code, prepare an N-body snapshot, e.g.:
+mkplummer test_in 100000
+and then run the example script with some parameters, similarly to gyrfalcON:
+python run.py test_in test_out eps=0.05 kmax=4 step=1 tstop=5
