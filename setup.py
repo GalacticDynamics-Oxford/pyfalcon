@@ -1,18 +1,19 @@
+#!/usr/bin/env python
 import numpy, os, setuptools
 
-nemopath = os.getenv('NEMO')
-if nemopath is None:
-    raise RuntimeError('NEMO environment variable is not found')
 setuptools.setup(name='pyfalcon',
     description='Python interface for the fast-multipole gravity solver falcON from NEMO',
     ext_modules=[setuptools.Extension(
     name='pyfalcon',
-    sources=['pyfalcon.cpp'],
-    include_dirs=[numpy.get_include(), nemopath+'/usr/dehnen/falcON/inc', nemopath+'/usr/dehnen/utils/inc'],
-    define_macros=[('falcON_SINGLE', None), ('falcON_NEMO', None)],
-    extra_objects=[
-        nemopath+'/usr/dehnen/falcON/lib/libfalcON.a',
-        nemopath+'/usr/dehnen/utils/lib/libWDutils.a',
-        nemopath+'/lib/libnemo.a'],
+    sources=['pyfalcon.cpp',
+    'src/src/exception.cc',
+    'src/src/numerics.cc',
+    'src/src/basic.cc',
+    'src/src/body.cc',
+    'src/src/gravity.cc',
+    'src/src/kernel.cc',
+    'src/src/tree.cc'],
+    include_dirs=[numpy.get_include(), 'src/inc', 'src/inc/utils'],
+    define_macros=[('falcON_SINGLE', None)],
     ) ],
     requires=['numpy'] )

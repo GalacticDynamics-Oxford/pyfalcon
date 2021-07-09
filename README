@@ -1,9 +1,15 @@
-This is a simple Python interface for the fast-multipole gravity solver "falcON"
-(W.Dehnen, ApJL, 536, 9, 2000), which is provided as a standalone program within
-the NEMO stellar-dynamical toolbox:
+This is a simple Python interface and an AMUSE interface
+for the fast-multipole gravity solver "falcON" (W.Dehnen, ApJL, 536, 9, 2000),
+which is included in the NEMO stellar-dynamical toolbox:
 https://teuben.github.io/nemo/
 
-This package provides a single function, gravity(), which constructs the tree
+This package contains a stripped-down version of falcON, extracted from NEMO
+and removing parts not directly relevant for the computation of gravity
+(hence NEMO is not required for this package).
+It provides two independent interfaces.
+
+(==1==) The first is a pure Python extension module "pyfalcon".
+It provides a single function, gravity(), which constructs the tree
 and computes potential and accelerations for all particles or a subset of them.
 As an example of usage, the program run.py implements a basic N-body simulation
 code: reading the input snapshot (in NEMO format), performing an integration
@@ -25,15 +31,29 @@ to determine the acceleration at an arbitrary point in space, you need to put
 a particle there, and set its mass to a tiny but nonzero value; zero masses
 are not allowed.
 
-Installation.
-Run setup.py install, as usual.
-NEMO (including $NEMO/usr/dehnen/falcON) must be installed in the system
-as a pre-requisite, and its location specified in the environment variable $NEMO.
-UNSIO is recommended for the example program, but is not needed for the Python
-extension module itself.
-The package supports both Python 2.x and 3.x.
+(==2==) The second is the module for the AMUSE stellar-dynamics framework:
+https://amusecode.org/
+It can be accessed via  amuse.community.falcon.interface.Falcon
+(an instance of GravitationalDynamicsInterface), and works just as any other
+gravitational dynamics code, using a simple leapfrog integration with
+a constant shared timestep. It has the following tunable parameters:
+timestep - global, shared timestep for the integration.
+epsilon - the softening length (or epsilon_squared for a square of this number).
+individual_epsilon - if set to True, use individual softening lengths for
+each particle instead of the global value; these are taken from particle radii.
 
+Installation.
+(==1==) For the pure Python interface, run setup.py install, as usual.
+UNSIO is recommended for the example program, but is not needed for the Python
+extension module itself; neither is NEMO.
+The package supports both Python 2.x and 3.x.
 To test the code, prepare an N-body snapshot, e.g.:
 mkplummer test_in 100000
 and then run the example script with some parameters, similarly to gyrfalcON:
 python run.py test_in test_out eps=0.05 kmax=4 step=1 tstop=5
+
+(==2==) For the AMUSE interface, run "make amuse" or simply "make" (the latter
+also installs the pure python interface). The environment variable AMUSE_DIR
+must be set to the AMUSE root folder, and the module will be copied into
+$(AMUSE_DIR)/src/amuse/community/falcon/
+To test the interface, run amuse_example.py (integrate a simple Plummer sphere).

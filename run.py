@@ -116,7 +116,7 @@ if __name__ == '__main__':
     snap  = readSnapshot(infile, eps)
 
     # run the integration loop
-    wallclock_t0 = time.clock()
+    wallclock_t0 = time.time()
     print("#   sim_time   total_energy   pot_energy   kin_energy   virial   cpu_time")
     while snap.time <= tstop:
         if snap.time % step == 0:  # write a snapshot to a file, appending time to the filename
@@ -124,7 +124,7 @@ if __name__ == '__main__':
         # print out diagnostic info
         Epot = numpy.sum(snap.mass[:,None] * snap.pos * snap.acc)
         Ekin = numpy.sum(snap.mass[:,None] * snap.vel**2) * 0.5
-        wallclock_t = time.clock() - wallclock_t0
+        wallclock_t = time.time() - wallclock_t0
         print("%12.6f %14.8g %12.6g %12.6g %8.4f %2i:%02i:%04.1f" %
             (snap.time, Epot+Ekin, Epot, Ekin, -2*Ekin/Epot,
             wallclock_t/3600, wallclock_t/60%60, wallclock_t%60))
