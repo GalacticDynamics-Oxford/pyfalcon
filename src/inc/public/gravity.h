@@ -145,7 +145,7 @@ namespace falcON {
       // friends                                                                
       //------------------------------------------------------------------------
       friend class GravEstimator;
-      friend class falcON::traits<acpn_data>;
+      friend struct falcON::traits<acpn_data>;
       //------------------------------------------------------------------------
       // private const data access                                              
       //------------------------------------------------------------------------

@@ -53,7 +53,7 @@ and then run the example script with some parameters, similarly to gyrfalcON:
 python run.py test_in test_out eps=0.05 kmax=4 step=1 tstop=5
 
 (==2==) For the AMUSE interface, run "make amuse" or simply "make" (the latter
-also installs the pure python interface). The environment variable AMUSE_DIR
-must be set to the AMUSE root folder, and the module will be copied into
-$(AMUSE_DIR)/src/amuse/community/falcon/
+also installs the pure python interface). The module will be copied into
+$(AMUSE_ROOT)/community/falcon/ , where AMUSE_ROOT is the root folder of
+the AMUSE python package, i.e. amuse.__path__[0]
 To test the interface, run amuse_example.py (integrate a simple Plummer sphere).

@@ -2,7 +2,7 @@ INCDIR   = inc
 SRCDIR   = src
 OBJDIR   = obj
 LIBNAME  = libfalcON.a
-CXXFLAGS = -I$(INCDIR) -I$(INCDIR)/utils -O2 -fPIC -mfpmath=sse -march=native -DfalcON_SINGLE
+CXXFLAGS = -I$(INCDIR) -I$(INCDIR)/utils -O2 -fPIC -mfpmath=sse -march=native -DfalcON_SINGLE -Wall
 
 SOURCES  = \
     exception.cc \
@@ -16,7 +16,7 @@ SOURCES  = \
 OBJECTS  = $(patsubst %.cc,$(OBJDIR)/%.o,$(SOURCES))
 
 $(LIBNAME):  $(OBJECTS)
-	ar rc $(LIBNAME) $(OBJECTS)
+	$(AR) rc $(LIBNAME) $(OBJECTS)
 
 $(OBJDIR)/%.o:  $(SRCDIR)/%.cc Makefile
 	@mkdir -p $(OBJDIR)

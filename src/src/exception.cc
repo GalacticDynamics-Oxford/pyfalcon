@@ -107,7 +107,7 @@ WDutils::RunInfo::RunInfo()
 #  pragma clang diagnostic push
 #  pragma clang diagnostic ignored "-Wformat-security"
 #endif
-      SNprintf(_m_time,104,ctime(&now));
+      SNprintf(_m_time,104,"%s",ctime(&now));
 #ifdef __clang__
 #  pragma clang diagnostic pop
 #endif
@@ -127,7 +127,7 @@ WDutils::RunInfo::RunInfo()
 #  pragma clang diagnostic push
 #  pragma clang diagnostic ignored "-Wformat-security"
 #endif
-	SNprintf(_m_user,104,user_);
+	SNprintf(_m_user,104,"%s",user_);
 #ifdef __clang__
 #  pragma clang diagnostic pop
 #endif
@@ -192,7 +192,7 @@ WDutils::RunInfo::RunInfo()
       _m_tbb_size = _m_tbb_proc;
     }
   } 
-  catch(WDutils::exception ex) { WDutils_RETHROW(ex); }
+  catch(WDutils::exception& ex) { WDutils_RETHROW(ex); }
 }
 //
 void WDutils::RunInfo::set_omp(int 

@@ -75,7 +75,7 @@
 #  include <omp.h>
 #  define WDutils_included_omp_h
 #endif
-
+#include <cstdio>
 //                                                                              
 //  WDutils                                                                     
 //                                                                              
@@ -595,7 +595,9 @@ namespace WDutils {
   /// method invoking an error, suitable as @a Thrower::handler
   inline void MakeError(const char*file, unsigned line, const char*mess)
   {
-    Error(file,line,"WDutils")(mess);
+    //Error(file,line,"WDutils")(mess);  <<< this produces an obscure warning/error in recent compilers
+    printf("WDutils error in %s, line %u: %s\n", file, line, mess);
+    std::terminate();
   }
   /// guard against throwing an exception inside an openMP parallel region
   struct ThrowGuard

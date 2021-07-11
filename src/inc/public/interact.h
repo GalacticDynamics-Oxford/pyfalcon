@@ -61,7 +61,7 @@ namespace WDutils {
       if(_name[0]==0) {
 	char a[1024]; strcpy(a,traits<A>::name());
 	char b[1024]; strcpy(b,traits<B>::name());
-	sprintf(_name,"iaction<%s,%s>",a,b);
+	snprintf(_name,1000,"iaction<%s,%s>",a,b);
       }
       return _name;
     }
@@ -123,7 +123,7 @@ namespace WDutils {
       static char _name[1024]={0};
       if(_name[0]==0) {
 	char a[1024]; strcpy(a,traits<A>::name());
-	sprintf(_name,"saction<%s>",a);
+	snprintf(_name,1000,"saction<%s>",a);
       }
       return _name;
     }
@@ -542,14 +542,14 @@ namespace falcON {
       if(!is_active(A) && !is_active(B))return true;     // no actives -> no job
       if(discard(A,B))                  return true;     // try to discard      
       if(number(A) < NCB)               return many(A,B);// perform many single 
-                                        return false;    // must split          
+      else                              return false;    // must split          
     }
     //--------------------------------------------------------------------------
     bool interact(leaf_iter const&B, cell_iter const&A) const {
       if(!is_active(A) && !is_active(B))return true;     // no actives -> no job
       if(discard(A,B))                  return true;     // try to discard      
       if(number(A) < NCB)               return many(A,B);// perform many single 
-                                        return false;    // must split          
+      else                              return false;    // must split          
     }
     //--------------------------------------------------------------------------
     bool interact(cell_iter const&A, cell_iter const&B) const {
@@ -557,13 +557,13 @@ namespace falcON {
       if(discard(A,B))                  return true;     // try to discard      
       if(number(A) < NCC &&
 	 number(B) < NCC    )           return many(A,B);// perform many single 
-                                        return false;    // must split          
+      else                              return false;    // must split          
     }
     //--------------------------------------------------------------------------
     bool interact(cell_iter const&A) const {
       if(!is_active(A))              return true;        // no actives -> no job
       if(number(A) < NCL)            return many(A);     // perform many single 
-                                     return false;       // must split          
+      else                           return false;       // must split          
     }
     //--------------------------------------------------------------------------
     void interact(leaf_iter const&A, leaf_iter const&B) const {

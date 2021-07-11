@@ -218,8 +218,8 @@ namespace falcON {
     private:                                 ///< 4bytes: flag
       uint8_t  LEVEL;                        ///< 1byte : level in tree
       uint8_t  OCTANT;                       ///< 1byte : octant of parent cell
-      PeanoMap PEANO;                        ///< 1byte : Peano-Hilbert map
-      uint8_t  KEY;                          ///< 1byte : local Peano key
+      //PeanoMap PEANO;                        ///< 1byte : Peano-Hilbert map
+      //uint8_t  KEY;                          ///< 1byte : local Peano key
       indx     NLEAFS;                       ///< 2bytes: # leaf children
       indx     NCELLS;                       ///< 2bytes: # cell children
       unsigned NUMBER;                       ///< 4bytes: # leaf descendants
