@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import numpy, os, setuptools
+import sys, numpy, os, setuptools
+
+if sys.version_info[0]==3 and sys.version_info[1]>=10 and 'install' in sys.argv:
+    print('If you are scared by a deprecation warning about running "setup.py install", try "pip install ." instead\n')
 
 setuptools.setup(name='pyfalcon',
     description='Python interface for the fast-multipole gravity solver falcON from NEMO',

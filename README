@@ -43,7 +43,10 @@ individual_epsilon - if set to True, use individual softening lengths for
 each particle instead of the global value; these are taken from particle radii.
 
 Installation.
-(==1==) For the pure Python interface, run setup.py install, as usual.
+(==1==) For the pure Python interface, run "python setup.py install", as usual.
+In newer versions of Python (3.10+), this produces a deprecation warning,
+which can be avoided by running "pip install ." (NOT "pip install pyfalcon",
+since this would install an unrelated package from PyPA with the same name).
 UNSIO is recommended for the example program, but is not needed for the Python
 extension module itself; neither is NEMO.
 The package supports both Python 2.x and 3.x.

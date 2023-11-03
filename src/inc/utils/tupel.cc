@@ -360,7 +360,7 @@ namespace meta {
     }
     /// used in operator<< (std::ostream, tupel)
     static void v_out(std::ostream&o, cX*a)
-    { v_outwp(o,a,o.width(),o.precision()); }
+    { v_outwp(o,a,(int)o.width(),(int)o.precision()); }
     /// used in operator>> (std::istream, tupel)
     static void v_in(std::istream&i, X*a)
     {

@@ -224,7 +224,7 @@ namespace {
     copy_sub(C,P);                                 // copy level, octant, centre
     nleafs_(C) = 0;                                // reset cell: # leaf kids   
     ncells_(C) = 0;                                // reset cell: # cell kids   
-    fcleaf_(C) = NoLeaf(T,Lf);                     // set cell: sub-leafs       
+    fcleaf_(C) = (unsigned int)NoLeaf(T,Lf);       // set cell: sub-leafs       
     _LoopLeafKids(PT,P,pl)                        // LOOP(leaf kids of Pcell)  
       if(in_subtree(pl)) {                         //   IF(leaf == subt leaf)   
 	(Lf++)->copy(pl);                          //     copy link to body etc 
@@ -241,9 +241,9 @@ namespace {
 	  }                                        //   ENDIF                   
     number_(C) = nleafs_(C);                       // # leafs >= # leaf kids    
     if(ncells_(C)) {                               // IF(cell has cell kids)    
-      int c = NoCell(T,C);                         //   index of cell           
+      int c = (unsigned int)NoCell(T,C);           //   index of cell           
       OctTree::Cell*Ci=Cf;                         //   remember free cells     
-      fccell_(C) = NoCell(T,Ci);                   //   set cell children       
+      fccell_(C) = (unsigned int)NoCell(T,Ci);     //   set cell children       
       Cf += ncells_(C);                            //   reserve children cells  
       _LoopCellKids(PT,P,pc)                      //   LOOP(c kids of Pcell)   
 	if(is_subtreecell(pc)) {                   //     IF(cell == subt cell) 
@@ -831,7 +831,7 @@ namespace {
 #endif
     centre_(C) = P->centre();                      // copy centre               
     number_(C) = P->NUMBER;                        // copy number               
-    fcleaf_(C) = NoLeaf(TREE,Lf);                  // set cell: leaf kids       
+    fcleaf_(C) = (unsigned int)NoLeaf(TREE,Lf);    // set cell: leaf kids       
     nleafs_(C) = 0;                                // reset cell: # leaf kids   
     int i,nsub=0;                                  // octant, counter: sub-boxes
     node*const*N;                                  // pter to sub-node          
@@ -849,9 +849,9 @@ namespace {
       }                                            //   END IF
     }                                              // END LOOP                  
     if(nsub) {                                     // IF sub-boxes              
-      int c = NoCell(TREE,C);                      //   index of cell           
+      int c = (unsigned int)NoCell(TREE,C);        //   index of cell           
       OctTree::Cell*Ci=Cf;                         //   remember free cells     
-      fccell_(C) = NoCell(TREE,Ci);                //   set cell: 1st sub-cell  
+      fccell_(C) = (unsigned int)NoCell(TREE,Ci);  //   set cell: 1st sub-cell  
       ncells_(C) = nsub;                           //   set cell: # sub-cells   
       Cf += nsub;                                  //   reserve nsub cells      
       for(i=0, N=P->OCT; i!=Nsub; ++i,++N)         //   LOOP octants            
@@ -906,7 +906,7 @@ namespace {
 #endif
     centre_(C) = P->centre();                      // copy centre               
     number_(C) = P->NUMBER;                        // copy number               
-    fcleaf_(C) = NoLeaf(TREE,Lf);                  // set cell: leaf kids       
+    fcleaf_(C) = (unsigned int)NoLeaf(TREE,Lf);    // set cell: leaf kids       
     if(P->is_twig()) {                             // IF box==twig              
       fcCell_(C) =-1;                              //   set cell: sub-cells     
       ncells_(C) = 0;                              //   set cell: # cell kids   
@@ -939,9 +939,9 @@ namespace {
 	}                                          //     END IF
       }                                            //   END LOOP                
       if(nsub) {                                   //   IF has sub-boxes        
-	int c = NoCell(TREE,C);                    //     index of cell         
+	int c = (unsigned int)NoCell(TREE,C);      //     index of cell         
 	OctTree::Cell*Ci=Cf;                       //     remember free cells   
-	fccell_(C) = NoCell(TREE,Ci);              //     set cell: 1st sub-cel 
+	fccell_(C) = (unsigned int)NoCell(TREE,Ci);//     set cell: 1st sub-cel 
 	ncells_(C) = nsub;                         //     set cell: # cell kids 
 	Cf += nsub;                                //     reserve nsub cells    
 	for(i=0, N=P->OCT; i!=Nsub; ++i,++N)       //     LOOP octants          
@@ -1340,7 +1340,7 @@ OctTree::OctTree(const bodies*bb,                  // I: body sources
   if(TB.N_dots()) {                                // IF(dots in tree)          
     TB.build();                                    //   build box-dot tree      
     SET_T(" time for TreeBuilder::build():        ");
-    allocate(TB.N_dots(),TB.N_boxes(),             //   allocate leafs & cells  
+    allocate((unsigned int)TB.N_dots(),(unsigned int)TB.N_boxes(),//  allocate leafs & cells  
 	     TB.N_levels(),TB.root_rad());         //   & set up table: radii   
     TB.link();                                     //   box-dot -> cell-leaf    
     set_depth(TB.depth());                         //   set tree depth          
@@ -1394,7 +1394,7 @@ void OctTree::build(int        const&nc,           //[I: N_crit]
   if(TB.N_dots()) {                                // IF(dots in tree)          
     TB.build();                                    //   build box-dot tree      
     SET_T(" time for TreeBuilder::build():        ");
-    allocate(TB.N_dots(),TB.N_boxes(),             //   allocate leafs & cells  
+    allocate((unsigned int)TB.N_dots(),(unsigned int)TB.N_boxes(),//  allocate leafs & cells  
 	     TB.N_levels(),TB.root_rad());         //   & set up table: radii   
     TB.link();                                     //   box-dot -> cell-leaf    
     set_depth(TB.depth());                         //   set tree depth          

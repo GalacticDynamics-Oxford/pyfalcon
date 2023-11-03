@@ -1110,7 +1110,7 @@ namespace WDutils {
     static const char  *name () {
       static char _name[1024]={0};
       if(_name[0]==0)
-	sprintf(_name,"block_alloc<%s,%d>",traits<T>::name(),K);
+	snprintf(_name,1024,"block_alloc<%s,%d>",traits<T>::name(),K);
       return _name;
     }
   };

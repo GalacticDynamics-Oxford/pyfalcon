@@ -718,7 +718,7 @@ void bodies::merge(bodies&Other) falcON_THROWING
   for(int i=0; i!=index::max_blocks; ++i)
     Other.BLOCK[i] = 0;
 }
-//
+/*
 namespace {
   bodies *CopyFrom, *CopyTo;
   Array<bodies::index> IndexTable;
@@ -731,7 +731,7 @@ namespace {
     }
   };
 }
-//
+*/
 //
 bodies::block* bodies::ensure_contiguous(unsigned N, bodytype t, unsigned Na)
 {
